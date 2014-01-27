@@ -1,5 +1,5 @@
 class WelcomeController < ApplicationController
   def index
-    @recent_articles = Article.order(updated_at: :desc).limit(5)
+    @recent_articles = Article.all.last(5)
   end
 end
