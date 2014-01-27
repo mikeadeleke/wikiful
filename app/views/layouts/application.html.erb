@@ -1,50 +1,62 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>WikifulDemo</title>
-  <!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script> <![endif]-->
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <%= csrf_meta_tags %>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-</head>
+  <head>
+    <title>WikifulDemo</title>
+    <!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script> <![endif]-->
+    <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= csrf_meta_tags %>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  </head>
   <body>
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
           <%= link_to "Wikiful", root_path, :class => "brand" %>
-          <div style="float: right;">Eventually log in/out and sign up links will go here</div>
+          <div class='session-controls'> 
+            <% if current_user %>
+            <%= link_to "Log Out", logout_path, :class => 'btn btn-primary btn-mini' %>
+            Logged in as <%= current_user.email %>.
+            <% else %>
+            <div class="btn-group">
+              <%= link_to "Sign Up", signup_path, :class => "btn btn-mini" %>
+              <%= link_to "Log In", login_path, :class => "btn btn-mini" %>
+            </div>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
     <div class="container">
       <div class="row">
         <div class="span4">
-          </div>
-      </div>
-      <div class="row">
-        <div class="span9"><%= yield %></div>
-        <div class="span3 sidebar">
-          <div class="my-wiki-site">
-            <h4>My Wikiful</h4>
-            <ul>
-              <li><%= link_to "Write a Wiki", new_article_path %></li>
-            </ul>
-          </div>
-          <div class="categories-sidebar">
-            <h4>Categories</h4>
-            <ul>
-              <% @categories.each do |category| %>
-              <li><%= link_to category.name, category %></li>
-              <% end %>
-            </ul>
-          </div>
-          <div class="about">
-            <h4>About Wikiful</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto earum neque perspiciatis quia animi debitis quod repellat vitae explicabo. Sapiente aliquam reprehenderit id vitae atque ducimus facere molestias soluta?</p>
+          <% flash.each do |name, msg| %>
+          <%= content_tag :div, msg, id: "flash_#{name}" %>
+          <% end %>
+        </div>
+        <div class="row">
+          <div class="span9"><%= yield %></div>
+          <div class="span3 sidebar">
+            <div class="my-wiki-site">
+              <h4>My Wikiful</h4>
+              <ul>
+                <li><%= link_to "Write a Wiki", new_article_path %></li>
+              </ul>
+            </div>
+            <div class="categories-sidebar">
+              <h4>Categories</h4>
+              <ul>
+                <% @categories.each do |category| %>
+                <li><%= link_to category.name, category %></li>
+                <% end %>
+              </ul>
+            </div>
+            <div class="about">
+              <h4>About Wikiful</h4>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto earum neque perspiciatis quia animi debitis quod repellat vitae explicabo. Sapiente aliquam reprehenderit id vitae atque ducimus facere molestias soluta?</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-</body>
-</html>
+    </body>
+  </html>
