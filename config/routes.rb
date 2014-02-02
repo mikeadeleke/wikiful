@@ -5,17 +5,21 @@ Wikiful::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'welcome#index'
-  resources :articles
-  resources :categories
-  
-  
   get 'signup', to: 'users#new', as: 'signup'
   get 'login', to: 'sessions#new', as: 'login'
   get 'logout', to: 'sessions#destroy', as: 'logout'
+  get 'sessions/create'
   
-  resources :users
-  resources :sessions
+  resources :users, except: [:new]
+
+  get "welcome/index"
+  # The priority is based upon order of creation: first created -> highest priority.
+  # See how all your routes lay out with "rake routes".
+
+  # You can have the root of your site routed with "root"
+  root 'welcome#index'
+  resources :articles
+  resources :categories
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
